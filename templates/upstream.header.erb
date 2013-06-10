@@ -1,0 +1,3 @@
+upstream <%= name %> {
+<%= "#{strategy};" if strategy != '' -%>
+<%= "keepalive #{keepalive};" if keepalive != false -%>
