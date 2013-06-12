@@ -6,7 +6,7 @@ define nginx::site($ensure = "present", $source = '', $content = '') {
     },
     owner  => 'root',
     group  => 'root',
-    mode   => 0640,
+    mode   => '0640',
     notify => Exec['reload-nginx'],
     require => File[
       '/etc/nginx/sites-available',

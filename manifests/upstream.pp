@@ -3,9 +3,9 @@ define nginx::upstream($ensure = 'present', $strategy = '', $keepalive = false) 
   $target_file = "/etc/nginx/conf.d/upstream_${name}.conf"
 
   File {
-    owner  => root,
-    group  => root,
-    mode   => 0640,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0640',
     ensure => $ensure,
     notify => Exec["rebuild-nginx-upstream-${name}"],
   }

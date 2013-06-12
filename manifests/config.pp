@@ -16,6 +16,8 @@ define nginx::config($ensure = 'present', $source = '', $content = '') {
   File {
     notify => Exec['reload-nginx'],
     ensure => $ensure,
+    owner  => 'root',
+    group  => 'root',
   }
 
   if ($content) {

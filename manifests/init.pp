@@ -23,10 +23,10 @@ class nginx($package = 'full', $version = 'installed', $config = '', $fastcgi_pa
         '/etc/nginx/sites-enabled',
         '/etc/nginx/sites-available'
     ]:
-		ensure  => directory,
-		owner   => root,
-		group   => root,
-		mode    => 0755,
+		ensure  => 'directory',
+		owner   => 'root',
+		group   => 'root',
+		mode    => '0755',
 		require => Package['nginx'],
 	}
 
@@ -36,13 +36,13 @@ class nginx($package = 'full', $version = 'installed', $config = '', $fastcgi_pa
 	}
 
     file { '/etc/nginx/nginx.conf':
-        ensure => present,
-        source => $use_config,
-        owner => root,
-        group => root,
-        mode => 0644,
+        ensure  => 'present',
+        source  => $use_config,
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0644',
         require => Package['nginx'],
-		notify  => Exec['reload-nginx'],
+        notify  => Exec['reload-nginx'],
 	}
 
     $use_fastcgi_params = $fastcgi_params ? {
@@ -51,13 +51,13 @@ class nginx($package = 'full', $version = 'installed', $config = '', $fastcgi_pa
     }
 
 	file { '/etc/nginx/fastcgi_params':
-	    ensure => present,
-	    source => $use_fastcgi_params,
-        owner => root,
-        group => root,
-        mode => 0644,
+        ensure  => 'present',
+        source  => $use_fastcgi_params,
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0644',
         require => Package['nginx'],
-		notify  => Exec['reload-nginx'],
+        notify  => Exec['reload-nginx'],
 	}
 
 	file { '/var/cache/nginx/':
