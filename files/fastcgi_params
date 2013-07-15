@@ -21,8 +21,4 @@ fastcgi_param  REMOTE_PORT        $remote_port;
 fastcgi_param  SERVER_ADDR        $server_addr;
 fastcgi_param  SERVER_PORT        $server_port;
 fastcgi_param  SERVER_NAME        $server_name;
-if ($server_port = 443) {
-	set $https_on on;
-}
-
-fastcgi_param HTTPS $https_on;
+fastcgi_param  HTTPS              $https;
