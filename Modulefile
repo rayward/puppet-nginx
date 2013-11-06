@@ -1,5 +1,5 @@
 name         'chrisboulton-nginx'
-version      '0.0.3'
+version      '0.0.4'
 license      'MIT'
 summary      'Install and manage nginx'
 description  'A different approach to managing nginx sites available/enabled, and configuration includes. Requires Nginx 1.1.11+'
