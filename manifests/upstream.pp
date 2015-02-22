@@ -1,4 +1,23 @@
-define nginx::upstream($ensure = 'present', $strategy = '', $keepalive = false) {
+define nginx::upstream(
+  $ensure = 'present',
+  $strategy = '',
+  $keepalive = false,
+  $check_health = false,
+  $check_interval = '3000',
+  $check_rise = 2,
+  $check_fall = 5,
+  $check_timeout = 1000,
+  $check_default_down = true,
+  $check_type = 'tcp',
+  $check_keepalive_requests = 1,
+  $check_http_send = '',
+  $check_http_expect_alive = '',
+) {
+  
+  validate_bool($check_health)
+  validate_bool($check_default_down)
+  validate_re($check_type, ['^tcp$','^http$','^ssl_hello$','^mysql$','^ajp$','^fastcgi$'])
+
   $target_dir = "/etc/nginx/upstreams.d/${name}/"
   $target_file = "/etc/nginx/conf.d/upstream_${name}.conf"
 
@@ -30,7 +49,7 @@ define nginx::upstream($ensure = 'present', $strategy = '', $keepalive = false) 
   }
 
   file { "${target_dir}/2_footer.conf":
-    content => '}',
+    content => template('nginx/upstream.footer.erb'),
   }
 
   $command = $ensure ? {
