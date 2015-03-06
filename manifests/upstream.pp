@@ -9,6 +9,7 @@ define nginx::upstream(
   $check_timeout = 1000,
   $check_default_down = true,
   $check_type = 'tcp',
+  $check_port = '',
   $check_keepalive_requests = 1,
   $check_http_send = '',
   $check_http_expect_alive = '',
