@@ -16,12 +16,12 @@ class nginx(
     enable     => true,
     hasrestart => true,
     hasstatus  => true,
-    restart    => 'nginx -t /etc/nginx/nginx.conf && /etc/init.d/nginx reload',
+    restart    => '/usr/sbin/nginx -t -c /etc/nginx/nginx.conf && /etc/init.d/nginx reload',
     subscribe  => File['/etc/nginx/nginx.conf'],
   }
 
   exec { 'reload-nginx':
-    command     => 'nginx -t /etc/nginx/nginx.conf && /etc/init.d/nginx reload',
+    command     => '/usr/sbin/nginx -t -c /etc/nginx/nginx.conf && /etc/init.d/nginx reload',
     refreshonly => true,
   }
 
