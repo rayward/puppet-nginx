@@ -20,11 +20,6 @@ class nginx(
     subscribe  => File['/etc/nginx/nginx.conf'],
   }
 
-  exec { 'reload-nginx':
-    command     => '/etc/init.d/nginx reload',
-    refreshonly => true,
-  }
-
   file { ['/etc/nginx/conf.d/',
     '/etc/nginx/upstreams.d/',
     '/etc/nginx/sites-enabled',
@@ -48,7 +43,7 @@ class nginx(
     group   => 'root',
     mode    => '0644',
     require => Package['nginx'],
-    notify  => Exec['reload-nginx'],
+    notify  => Service['nginx'],
   }
 
   $use_fastcgi_params = $fastcgi_params ? {
@@ -63,7 +58,7 @@ class nginx(
     group   => 'root',
     mode    => '0644',
     require => Package['nginx'],
-    notify  => Exec['reload-nginx'],
+    notify  => Service['nginx'],
   }
 
   file { '/var/cache/nginx/':
