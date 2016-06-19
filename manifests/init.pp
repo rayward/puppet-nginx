@@ -1,9 +1,10 @@
 # - Class to install and manage nginx
 class nginx(
-  $package        = 'full',
-  $version        = 'installed',
-  $config         = '',
-  $fastcgi_params = ''
+  $package         = 'full',
+  $version         = 'installed',
+  $config          = '',
+  $fastcgi_params  = '',
+  $service_ensure  = 'running',
 ) {
 
   package { 'nginx':
@@ -12,7 +13,7 @@ class nginx(
   }
 
   service { 'nginx':
-    ensure     => 'running',
+    ensure     => $service_ensure,
     enable     => true,
     hasrestart => true,
     hasstatus  => true,
@@ -20,9 +21,17 @@ class nginx(
     subscribe  => File['/etc/nginx/nginx.conf'],
   }
 
-  exec { 'reload-nginx':
-    command     => '/usr/sbin/nginx -t -c /etc/nginx/nginx.conf && /etc/init.d/nginx reload',
-    refreshonly => true,
+  if $service_ensure == 'running' {
+    exec { 'reload-nginx':
+      command     => '/usr/sbin/nginx -t -c /etc/nginx/nginx.conf && /etc/init.d/nginx reload',
+      refreshonly => true,
+    }
+  }
+  else {
+    exec { 'reload-nginx':
+      command     => 'true',
+      refreshonly => true,
+    }
   }
 
   file { ['/etc/nginx/conf.d/',
