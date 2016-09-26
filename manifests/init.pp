@@ -63,7 +63,7 @@ class nginx(
 
   if ($config) {
     File['/etc/nginx/nginx.conf'] {
-      config => $config,
+      source => $config,
     }
   } elsif ($content) {
     File['/etc/nginx/nginx.conf'] {
