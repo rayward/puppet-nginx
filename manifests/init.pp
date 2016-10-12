@@ -15,7 +15,8 @@ class nginx(
     name   => "nginx-${package}",
   }
 
-  $restart_cmd = '/usr/sbin/nginx -t -c /etc/nginx/nginx.conf && (/etc/init.d/nginx status && /etc/init.d/nginx reload || /etc/init.d/nginx start)'
+  #$restart_cmd = '/usr/sbin/nginx -t -c /etc/nginx/nginx.conf && (/etc/init.d/nginx status && /etc/init.d/nginx reload || /etc/init.d/nginx start)'
+  $restart_cmd = '/usr/bin/env true'
 
   service { 'nginx':
     ensure     => $service_ensure,
