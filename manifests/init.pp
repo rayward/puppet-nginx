@@ -20,8 +20,6 @@ class nginx(
   service { 'nginx':
     ensure     => $service_ensure,
     enable     => true,
-    hasrestart => true,
-    hasstatus  => true,
     restart    => $restart_cmd,
     subscribe  => File['/etc/nginx/nginx.conf'],
   }
