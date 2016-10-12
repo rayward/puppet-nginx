@@ -24,16 +24,14 @@ class nginx(
     subscribe  => File['/etc/nginx/nginx.conf'],
   }
 
-  if $service_ensure == 'running' {
-    exec { 'reload-nginx':
-      command     => '/usr/sbin/nginx -t -c /etc/nginx/nginx.conf && /etc/init.d/nginx reload',
-      refreshonly => true,
-    }
+  exec { 'reload-nginx':
+    command     => '/usr/bin/env true',
+    refreshonly => true,
   }
-  else {
-    exec { 'reload-nginx':
-      command     => '/usr/bin/env true',
-      refreshonly => true,
+
+  if $service_ensure == 'running' {
+    Exec['reload-nginx'] {
+      notify => Service['nginx'],
     }
   }
 
