@@ -24,16 +24,18 @@ class nginx(
     subscribe  => File['/etc/nginx/nginx.conf'],
   }
 
-  if $service_ensure == 'running' {
-    exec { 'reload-nginx':
-      command     => '/usr/sbin/nginx -t -c /etc/nginx/nginx.conf && /etc/init.d/nginx reload',
-      refreshonly => true,
-    }
+  # DEPRECATED: use `notify => Service['nginx']` instead.
+  # This remains for backwards compatiblity with other modules.
+  # Previously, this would execute the same command as the custom restart above. Both the service and the exec
+  # doing the reload simultaneously would cause a race condition resulting in nginx to fail to reload correctly.
+  exec { 'reload-nginx':
+    command     => '/usr/bin/env true',
+    refreshonly => true,
   }
-  else {
-    exec { 'reload-nginx':
-      command     => '/usr/bin/env true',
-      refreshonly => true,
+
+  if $service_ensure == 'running' {
+    Exec['reload-nginx'] {
+      notify => Service['nginx'],
     }
   }
 
