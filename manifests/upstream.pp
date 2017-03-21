@@ -41,7 +41,6 @@ define nginx::upstream(
   }
 
   file { $target_file:
-    replace => false,
     notify  => Service['nginx'],
   }
 
