@@ -26,7 +26,10 @@ define nginx::upstream(
     owner  => 'root',
     group  => 'root',
     mode   => '0640',
-    ensure => $ensure,
+    ensure  => $ensure ? {
+      'present' => 'file',
+      'absent'  => 'absent',
+    },
     notify => Exec["rebuild-nginx-upstream-${name}"],
   }
 
