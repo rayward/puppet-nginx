@@ -1,18 +1,18 @@
 define nginx::upstream(
-  $ensure = 'present',
-  $strategy = '',
-  $keepalive = false,
-  $check_health = false,
-  $check_interval = '3000',
-  $check_rise = 2,
-  $check_fall = 5,
-  $check_timeout = 1000,
-  $check_default_down = true,
-  $check_type = 'tcp',
-  $check_port = '',
+  $ensure                   = 'present',
+  $strategy                 = '',
+  $keepalive                = false,
+  $check_health             = false,
+  $check_interval           = '3000',
+  $check_rise               = 2,
+  $check_fall               = 5,
+  $check_timeout            = 1000,
+  $check_default_down       = true,
+  $check_type               = 'tcp',
+  $check_port               = '',
   $check_keepalive_requests = 1,
-  $check_http_send = '',
-  $check_http_expect_alive = '',
+  $check_http_send          = '',
+  $check_http_expect_alive  = '',
 ) {
 
   validate_bool($check_health)
@@ -26,7 +26,7 @@ define nginx::upstream(
     owner  => 'root',
     group  => 'root',
     mode   => '0640',
-    ensure  => $ensure ? {
+    ensure => $ensure ? {
       'present' => 'file',
       'absent'  => 'absent',
     },
@@ -66,8 +66,8 @@ define nginx::upstream(
   }
 
   exec { "rebuild-nginx-upstream-${name}":
-    command     => $command,
-    require     => File[$target_dir],
-    notify      => Service['nginx'],
+    command => $command,
+    require => File[$target_dir],
+    notify  => Service['nginx'],
   }
 }
