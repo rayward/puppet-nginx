@@ -4,12 +4,11 @@ gem 'puppet', '<4'
 gem 'safe_yaml', '>= 1.0.4'
 gem 'librarian-puppet'
 
-group :test do
-  gem 'puppet-lint'
-  gem 'rspec-puppet'
-end
-
 group :development, :test do
-  gem 'rake'
-  gem 'puppetlabs_spec_helper'
+  gem "metadata-json-lint"
+  gem "puppet-lint"
+  gem "puppet-syntax"
+  gem "puppetlabs_spec_helper"
+  gem "rspec"
+  gem "rspec-puppet"
 end
