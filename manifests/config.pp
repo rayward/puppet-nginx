@@ -2,7 +2,8 @@
 define nginx::config(
   $ensure  = 'present',
   $source  = '',
-  $content = ''
+  $content = '',
+  $path    = "/etc/nginx/conf.d/${name}.conf",
 ) {
 
   validate_string($source, $content)
@@ -18,8 +19,6 @@ define nginx::config(
     fail("Nginx::Config[${name}] cannot specify both source and content")
   }
 
-  $conf_path   = "/etc/nginx/conf.d/${name}.conf"
-
   File {
     ensure => $ensure,
     owner  => 'root',
@@ -28,16 +27,16 @@ define nginx::config(
   }
 
   if ($content) {
-    file { $conf_path:
+    file { $path:
       content => $content,
     }
   }
   elsif ($ensure != 'absent') {
-    file { $conf_path:
+    file { $path:
       source => $source,
     }
   }
   else {
-    file { $conf_path : }
+    file { $path : }
   }
 }
