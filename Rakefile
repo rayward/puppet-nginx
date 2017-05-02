@@ -39,3 +39,5 @@ task :spec_clean do
     FileUtils::rm_f('spec/fixtures/manifests/site.pp')
   end
 end
+
+PuppetSyntax.exclude_paths = ["vendor/**/*", "gemfiles/vendor/**/*", "spec/fixtures/modules/**/*"]

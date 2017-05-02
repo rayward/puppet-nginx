@@ -13,6 +13,17 @@ describe 'nginx::config' do
     it { is_expected.not_to compile }
   end
 
+  context "with source and content both specified" do
+    let(:params) {
+      {
+        :source  => '/home/foo.conf',
+        :content => 'foo',
+      }
+    }
+
+    it { is_expected.not_to compile }
+  end
+
   context "with source specified" do
     let(:params) { {:source => '/home/foo.conf'} }
 

@@ -1,11 +1,10 @@
 # Class to manage NGinx configs
 define nginx::config(
   $ensure  = 'present',
-  $source  = '',
-  $content = '',
+  $source  = undef,
+  $content = undef,
   $path    = "/etc/nginx/conf.d/${name}.conf",
 ) {
-
   validate_string($source, $content)
 
   if ($ensure != 'present' and $ensure != 'absent') {

@@ -1,9 +1,10 @@
 # Class to manage site resources
 define nginx::site(
   $ensure  = 'present',
-  $source  = '',
-  $content = '',
+  $source  = undef,
+  $content = undef,
 ) {
+  validate_string($source, $content)
 
   File {
     ensure => $ensure ? {

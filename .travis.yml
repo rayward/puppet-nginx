@@ -1,9 +1,11 @@
----
-sudo: false
 language: ruby
-rvm:
-  - 2.2
 cache: bundler
+rvm:
+  - 2.1
+  - 2.2
+gemfile:
+  - gemfiles/puppet3.gemfile
+  - gemfiles/puppet4.gemfile
 script:
   - "bundle exec rake validate"
   - "bundle exec rake lint"
