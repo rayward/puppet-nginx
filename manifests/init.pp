@@ -1,7 +1,7 @@
 # - Class to install and manage nginx
 class nginx(
-  $config          = undef,
-  $content         = undef,
+  $config          = '',
+  $content         = '',
   $package         = 'full',
   $version         = 'installed',
   $fastcgi_params  = '',
@@ -59,15 +59,15 @@ class nginx(
     notify  => Service['nginx'],
   }
 
-  if ($config and $content) {
+  if ($config != '' and $content != '') {
     fail('$config and $content are both set, please choose only one to avoid unexpected behaviour')
   }
 
-  if ($config) {
+  if ($config != '') {
     File['/etc/nginx/nginx.conf'] {
       source => $config,
     }
-  } elsif ($content) {
+  } elsif ($content != '') {
     File['/etc/nginx/nginx.conf'] {
       content => $content,
     }
