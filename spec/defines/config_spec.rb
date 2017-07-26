@@ -1,12 +1,6 @@
 require 'spec_helper'
 
 describe 'nginx::config' do
-  let(:pre_condition) do
-    <<-EOF
-    service { 'nginx': }
-    EOF
-  end
-
   let(:title) { 'foo' }
 
   context "with neither source or content specified" do
