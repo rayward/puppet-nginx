@@ -6,6 +6,8 @@ define nginx::site(
 ) {
   validate_string($source, $content)
 
+  include nginx
+
   File {
     ensure  => $ensure ? {
       'absent' => 'absent',
