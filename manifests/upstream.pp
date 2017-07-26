@@ -23,14 +23,18 @@ define nginx::upstream(
   $target_file = "/etc/nginx/conf.d/upstream_${name}.conf"
 
   File {
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0640',
-    ensure => $ensure ? {
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0640',
+    ensure  => $ensure ? {
       'present' => 'file',
       'absent'  => 'absent',
     },
-    notify => Exec["rebuild-nginx-upstream-${name}"],
+    notify  => Exec["rebuild-nginx-upstream-${name}"],
+    require => [
+      File['/etc/nginx/upstreams.d'],
+      File['/etc/nginx/conf.d'],
+    ],
   }
 
   file { $target_dir:
