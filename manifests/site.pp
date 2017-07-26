@@ -6,15 +6,17 @@ define nginx::site(
 ) {
   validate_string($source, $content)
 
+  include nginx
+
   File {
-    ensure => $ensure ? {
+    ensure  => $ensure ? {
       'absent' => 'absent',
       default  => 'present',
     },
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0640',
-    notify => Service['nginx'],
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0640',
+    notify  => Service['nginx'],
     require => File[
       '/etc/nginx/sites-available',
       '/etc/nginx/sites-enabled'

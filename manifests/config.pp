@@ -18,11 +18,14 @@ define nginx::config(
     fail("Nginx::Config[${name}] cannot specify both source and content")
   }
 
+  include nginx
+
   File {
-    ensure => $ensure,
-    owner  => 'root',
-    group  => 'root',
-    notify => Service['nginx'],
+    ensure  => $ensure,
+    owner   => 'root',
+    group   => 'root',
+    require => Package['nginx'],
+    notify  => Service['nginx'],
   }
 
   if ($content != '') {

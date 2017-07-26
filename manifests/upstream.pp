@@ -19,18 +19,24 @@ define nginx::upstream(
   validate_bool($check_default_down)
   validate_re($check_type, ['^tcp$','^http$','^ssl_hello$','^mysql$','^ajp$','^fastcgi$'])
 
+  include nginx
+
   $target_dir = "/etc/nginx/upstreams.d/${name}/"
   $target_file = "/etc/nginx/conf.d/upstream_${name}.conf"
 
   File {
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0640',
-    ensure => $ensure ? {
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0640',
+    ensure  => $ensure ? {
       'present' => 'file',
       'absent'  => 'absent',
     },
-    notify => Exec["rebuild-nginx-upstream-${name}"],
+    notify  => Exec["rebuild-nginx-upstream-${name}"],
+    require => [
+      File['/etc/nginx/upstreams.d'],
+      File['/etc/nginx/conf.d'],
+    ],
   }
 
   file { $target_dir:
