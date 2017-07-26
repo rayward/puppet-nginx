@@ -23,12 +23,12 @@ define nginx::site(
 
   $config_file = "/etc/nginx/sites-available/${name}"
 
-  if ($source) {
+  if ($source != '') {
     file { $config_file:
       source => $source,
     }
   }
-  elsif ($content) {
+  elsif ($content != '') {
     file { $config_file:
       content => $content,
     }

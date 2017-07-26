@@ -1,8 +1,8 @@
 # Class to manage NGinx configs
 define nginx::config(
   $ensure  = 'present',
-  $source  = undef,
-  $content = undef,
+  $source  = '',
+  $content = '',
   $path    = "/etc/nginx/conf.d/${name}.conf",
 ) {
   validate_string($source, $content)
@@ -11,10 +11,10 @@ define nginx::config(
     fail("Nginx::Config[${name}] ensure should be one of present/absent")
   }
 
-  if (!$content and !$source and $ensure != 'absent') {
+  if ($content == '' and $source == '' and $ensure != 'absent') {
     fail("Nginx::Config[${name}] either source or content must be present")
   }
-  elsif ($content and $source) {
+  elsif ($content != '' and $source != '') {
     fail("Nginx::Config[${name}] cannot specify both source and content")
   }
 
@@ -25,7 +25,7 @@ define nginx::config(
     notify => Service['nginx'],
   }
 
-  if ($content) {
+  if ($content != '') {
     file { $path:
       content => $content,
     }
