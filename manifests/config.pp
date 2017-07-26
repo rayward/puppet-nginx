@@ -19,10 +19,11 @@ define nginx::config(
   }
 
   File {
-    ensure => $ensure,
-    owner  => 'root',
-    group  => 'root',
-    notify => Service['nginx'],
+    ensure  => $ensure,
+    owner   => 'root',
+    group   => 'root',
+    require => Package['nginx'],
+    notify  => Service['nginx'],
   }
 
   if ($content != '') {
