@@ -72,8 +72,9 @@ define nginx::upstream(
   }
 
   exec { "rebuild-nginx-upstream-${name}":
-    command => $command,
-    require => File[$target_dir],
-    notify  => Service['nginx'],
+    command     => $command,
+    require     => File[$target_dir],
+    notify      => Service['nginx'],
+    refreshonly => true,
   }
 }
