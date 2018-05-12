@@ -2,7 +2,7 @@
 define nginx::site(
   $ensure  = 'present',
   $source  = undef,
-  $content = undef,
+  $content = '',
 ) {
   validate_string($source, $content)
 
@@ -25,12 +25,11 @@ define nginx::site(
 
   $config_file = "/etc/nginx/sites-available/${name}"
 
-  if ($source != '') {
+  if ($source) {
     file { $config_file:
       source => $source,
     }
-  }
-  elsif ($content != '') {
+  } else {
     file { $config_file:
       content => $content,
     }
@@ -40,8 +39,7 @@ define nginx::site(
     file { "/etc/nginx/sites-enabled/${name}":
       ensure => $config_file,
     }
-  }
-  else {
+  } else {
     file { "/etc/nginx/sites-enabled/${name}":
       ensure => 'absent',
       # This should still notify the service, as a reload will not
