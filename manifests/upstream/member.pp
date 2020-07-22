@@ -4,9 +4,9 @@ define nginx::upstream::member(
   $ensure       = 'present',
   $host         = '',
   $down         = false,
-  $weight       = 1,
-  $max_fails    = 0,
-  $fail_timeout = 0,
+  $weight       = undef,
+  $max_fails    = undef,
+  $fail_timeout = undef,
   $backup       = false
 ) {
 
