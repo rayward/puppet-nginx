@@ -1,6 +1,6 @@
   server <%= @use_host -%>
-<%= " weight=#{@weight}" if @weight.to_i > 1 -%>
-<%= " max_fails=#{@max_fails}" if @max_fails.to_i > 0 -%>
-<%= " fail_timeout=#{@fail_timeout}" if @fail_timeout.to_i > 0 -%>
+<%= " weight=#{@weight}" if @weight -%>
+<%= " max_fails=#{@max_fails}" if @max_fails -%>
+<%= " fail_timeout=#{@fail_timeout}" if @fail_timeout -%>
 <%= " down" if @down == true -%>
 <%= " backup" if @backup == true -%>; # <%= @name %>

@@ -1,8 +1,8 @@
 language: ruby
 cache: bundler
 rvm:
-  - 2.1
-  - 2.2
+  - 2.5
+  - 2.6
 gemfile:
   - gemfiles/puppet3.gemfile
   - gemfiles/puppet4.gemfile

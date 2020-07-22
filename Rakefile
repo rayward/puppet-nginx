@@ -17,27 +17,4 @@ RSpec::Core::RakeTask.new(:spec_standalone) do |t|
   t.pattern = 'spec/**/*_spec.rb'
 end
 
-Rake::Task[:spec_prep].clear
-desc 'Create the fixtures directory'
-task :spec_prep do
-  FileUtils::mkdir_p('spec/fixtures/modules/nginx')
-  FileUtils::mkdir_p('spec/fixtures/manifests')
-  FileUtils.chdir('spec/fixtures/modules/nginx') do
-    %w(files manifests templates).each do |dir|
-      FileUtils::ln_sf("../../../../#{dir}", '.')
-    end
-  end
-  FileUtils::touch('spec/fixtures/manifests/site.pp')
-  sh 'librarian-puppet install --path=spec/fixtures/modules'
-end
-
-Rake::Task[:spec_clean].clear
-desc 'Clean up the fixtures directory'
-task :spec_clean do
-  #sh 'librarian-puppet clean'
-  if File.zero?('spec/fixtures/manifests/site.pp')
-    FileUtils::rm_f('spec/fixtures/manifests/site.pp')
-  end
-end
-
 PuppetSyntax.exclude_paths = ["vendor/**/*", "gemfiles/vendor/**/*", "spec/fixtures/modules/**/*"]
