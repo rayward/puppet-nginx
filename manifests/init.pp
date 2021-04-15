@@ -22,6 +22,7 @@ class nginx(
     hasstatus  => true,
     restart    => '/usr/sbin/nginx -t -c /etc/nginx/nginx.conf && /etc/init.d/nginx reload',
     subscribe  => File['/etc/nginx/nginx.conf'],
+    require    => Package['nginx'],
   }
 
   # DEPRECATED: use `notify => Service['nginx']` instead.
